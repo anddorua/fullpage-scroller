@@ -1,0 +1,22 @@
+.sps-body {
+  height: 100dvh;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.sps-section {
+  box-sizing: border-box;
+}
+
+.sps-scroll-container {
+  box-sizing: border-box;
+  transform: translateY(0);
+  transition: transform 0.7s;
+  overflow: visible;
+  height: 100%;
+}
+
+.sps-scroll-container .sps-section {
+  min-height: 100%;
+}

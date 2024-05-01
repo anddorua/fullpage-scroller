@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test My Library</title>
+    <link rel="stylesheet" href="./sps-styles.css" />
+    <link rel="stylesheet" href="./my-styles.css" />
+  </head>
+  <body class="sps-body">
+    <div class="scroll-container sps-scroll-container">
+      <section class="section sps-section">Some content 1</section>
+      <section class="section sps-section">Some content 2</section>
+      <section class="section sps-section">Some content 3</section>
+      <section class="section sps-section">Some content 4</section>
+    </div>
+    <script type="module">
+      import StreamPageScroller from "../src/main.ts";
+
+      const sps = new StreamPageScroller({ name: "Vite User" });
+    </script>
+  </body>
+</html>
