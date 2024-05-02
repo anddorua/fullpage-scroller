@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+.sps-body.sps-responsive {
+  overflow: visible;
+}
+
 .sps-section {
   box-sizing: border-box;
 }
@@ -19,4 +23,8 @@
 
 .sps-scroll-container .sps-section {
   min-height: 100%;
+}
+
+.sps-responsive .sps-section {
+  min-height: auto;
 }

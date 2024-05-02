@@ -9,7 +9,7 @@ body, html {
 }
 
 .section {
-  min-height: 100%;
+  height: 400px;
 }
 
 section:nth-child(1) {
