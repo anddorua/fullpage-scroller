@@ -3,6 +3,16 @@ export interface StreamPageScrollerOptions {
   scrollContainerSelector: string;
   scrollSectionSelector: string;
   responsiveMediaQuery: string;
+  /**
+   * Each section can contain subsections. In case there are more than one subsection specified for a section
+   * each scroll hit (mouse wheel or touch swipe) will emit a next subsection event instead of
+   * scrolling to the next section. When entering a section the subsection event will be emitted
+   * for the first subsection. Such event will be emitted before the transition starts.
+   * Caution! They can't have zeroes, otherwise it will break logic.
+   */
+  subsections?: number[]; // sets how many subsections are in each section, default all sections have 1 subsection
+  subsectionTransitionDuration: number; // used to block scroll events during subsection transition
+  onSubsectionEnter: (sectionIndex: number, subsectionIndex: number) => void;
 }
 
 enum ScrollDirection {
@@ -22,6 +32,7 @@ export default class StreamPageScroller {
   private _scrollContainerEl: HTMLElement | null = null;
   private _sections!: HTMLElement[];
   private _activeIndex = 0;
+  private _activeSubsectionIndex = -1;
   private _touchStartY: number = 0;
   private _mode: ScrollMode | null = null;
 
@@ -38,6 +49,8 @@ export default class StreamPageScroller {
       scrollContainerSelector: ".scroll-container",
       scrollSectionSelector: ".section",
       responsiveMediaQuery: "(max-height: 0px)",
+      subsectionTransitionDuration: 700,
+      onSubsectionEnter: () => {},
       ...options,
     };
     this._findElements();
@@ -129,7 +142,10 @@ export default class StreamPageScroller {
   private _addResizeObserver(): void {
     if (!this._resizeObserver) {
       this._resizeObserver = new ResizeObserver(() => {
-        this._scrollToIndex(this._activeIndex);
+        this._scrollToIndex(
+          this._activeIndex,
+          this._activeSubsectionIndex >= 0 ? this._activeSubsectionIndex : 0
+        );
       });
     }
     this._resizeObserver.observe(document.body);
@@ -160,6 +176,9 @@ export default class StreamPageScroller {
     if (this._scrollInProgress) {
       return;
     }
+    if ((this._isTopPosition() && event.deltaY < 0) || (this._isBottomPosition() && event.deltaY > 0)) {
+      return;
+    }
     this._collectedScrollY += event.deltaY;
     if (Math.abs(this._collectedScrollY) >= this._options.deltaYThreshold) {
       this._scrollPage(
@@ -168,9 +187,22 @@ export default class StreamPageScroller {
     }
   }
 
+  private _isTopPosition(): boolean {
+    return this._activeIndex === 0 && this._activeSubsectionIndex === 0;
+  }
+
+  private _isBottomPosition(): boolean {
+    return (
+      this._activeIndex === this._sections.length - 1 &&
+      this._activeSubsectionIndex === (this._options.subsections?.[this._activeIndex] ?? 1) - 1
+    );
+  }
+
   private _scrollPage(direction: ScrollDirection): void {
-    this._collectedScrollY = 0;
     if (!this._scrollContainerEl) {
+      return;
+    }
+    if (this._scrollSubsection(direction)) {
       return;
     }
     const nextIndex =
@@ -179,19 +211,57 @@ export default class StreamPageScroller {
         : this._activeIndex - 1;
     if (nextIndex >= 0 && nextIndex < this._sections.length) {
       this._scrollInProgress = true;
-      this._scrollToIndex(nextIndex);
+      let subsection = 0;
+      const subsectionCount = this._options.subsections?.[nextIndex] ?? 1;
+      if (subsectionCount > 1 && direction === ScrollDirection.UP) {
+        subsection = subsectionCount - 1;
+      }
+      this._scrollToIndex(nextIndex, subsection);
     }
   }
 
-  private _scrollToIndex(index: number): void {
+  private _scrollSubsection(direction: ScrollDirection): boolean {
+    if (!this._options.subsections) {
+      return false;
+    }
+    const subsections = this._options.subsections[this._activeIndex];
+    if (!subsections || subsections <= 1) {
+      return false;
+    }
+    const nextSubsectionIndex =
+      direction === ScrollDirection.DOWN
+        ? this._activeSubsectionIndex + 1
+        : this._activeSubsectionIndex - 1;
+    if (nextSubsectionIndex < 0 || nextSubsectionIndex >= subsections) {
+      return false;
+    }
+    this._activeSubsectionIndex = nextSubsectionIndex;
+    this._options.onSubsectionEnter(this._activeIndex, nextSubsectionIndex);
+    this._scrollInProgress = true;
+    setTimeout(
+      this._transitionEndEventListener,
+      this._options.subsectionTransitionDuration
+    );
+    return true;
+  }
+
+  private _scrollToIndex(index: number, startingSubsection: number): void {
     if (!this._scrollContainerEl) {
       return;
     }
     this._scrollContainerEl.style.transform = `translateY(-${this._sections[index].offsetTop}px)`;
+    if (
+      this._activeIndex !== index ||
+      this._activeSubsectionIndex !== startingSubsection
+    ) {
+      this._options.onSubsectionEnter(index, startingSubsection);
+    }
     this._activeIndex = index;
+    this._activeSubsectionIndex = startingSubsection;
   }
 
   private _handleTransitionEnd(): void {
+    this._collectedScrollY = 0;
     this._scrollInProgress = false;
   }
 

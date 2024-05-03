@@ -20,7 +20,11 @@
       const sps = new StreamPageScroller({
         scrollContainerSelector: ".scroll-container",
         scrollSectionSelector: ".section",
-        responsiveMediaQuery: "(max-height: 600px)"
+        responsiveMediaQuery: "(max-height: 600px)",
+        subsections: [1, 1, 4, 1],
+        onSubsectionEnter: (sectionIndex, subsectionIndex) => {
+          console.log(`Section ${sectionIndex}, Subsection ${subsectionIndex} entered`);
+        },
       });
     </script>
   </body>
