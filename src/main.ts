@@ -57,6 +57,16 @@ export default class StreamPageScroller {
     this._setMediaQueryListener();
   }
 
+  /**
+   * Sets the current subsection index for the active section.
+   * Intended to be used in slide mode when subsection content has been changed
+   * as a result of user interaction. It doesn't causes event emission.
+   * @param subsectionIndex number
+   */
+  public setSubsection(subsectionIndex: number): void {
+    this._activeSubsectionIndex = subsectionIndex;
+  }
+
   private _setMediaQueryListener(): void {
     const mediaQuery = window.matchMedia(this._options.responsiveMediaQuery);
     const handler = () => {
@@ -176,7 +186,10 @@ export default class StreamPageScroller {
     if (this._scrollInProgress) {
       return;
     }
-    if ((this._isTopPosition() && event.deltaY < 0) || (this._isBottomPosition() && event.deltaY > 0)) {
+    if (
+      (this._isTopPosition() && event.deltaY < 0) ||
+      (this._isBottomPosition() && event.deltaY > 0)
+    ) {
       return;
     }
     this._collectedScrollY += event.deltaY;
@@ -194,7 +207,8 @@ export default class StreamPageScroller {
   private _isBottomPosition(): boolean {
     return (
       this._activeIndex === this._sections.length - 1 &&
-      this._activeSubsectionIndex === (this._options.subsections?.[this._activeIndex] ?? 1) - 1
+      this._activeSubsectionIndex ===
+        (this._options.subsections?.[this._activeIndex] ?? 1) - 1
     );
   }
 
