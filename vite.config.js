@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 
-export default defineConfig(({command}) => {
+export default defineConfig(({ command }) => {
   return {
     build: {
       lib: {
@@ -17,5 +17,8 @@ export default defineConfig(({command}) => {
       },
     },
     publicDir: command === "serve" ? "public" : false,
+    server: {
+      open: "/index.html",
+    },
   };
 });
