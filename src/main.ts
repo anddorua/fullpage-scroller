@@ -1,3 +1,5 @@
+import './css/sps-styles.css';
+
 export interface FullpageVerticalSliderOptions {
   deltaYThreshold: number;
   slidesContainerSelector: string;
