@@ -1,7 +1,12 @@
+.sps-html-lock {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
 .sps-body {
   height: 100dvh;
   overflow: hidden;
-  position: relative;
   box-sizing: border-box;
 }
 

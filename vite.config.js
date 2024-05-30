@@ -4,8 +4,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: "src/main.ts", // Path to your entry file
-      name: "StreamPageScroller", // Global variable when included as a script tag
-      fileName: (format) => `sps.${format}.js`,
+      name: "FullpageVerticalSlider", // Global variable when included as a script tag
+      fileName: (format) => `fvs.${format}.js`,
     },
     rollupOptions: {
       // Externalize peer dependencies

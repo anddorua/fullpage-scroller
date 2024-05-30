@@ -32,3 +32,25 @@ section:nth-child(5) {
   background-color: #eda9f2;
   padding: 2em;
 }
+
+.s3 {
+  display: flex;
+  flex-direction:column;
+  justify-content: space-between;
+}
+
+.subsections {
+  display: flex;
+  align-self: center;
+  gap: 40px;
+}
+
+.subsection {
+  outline: 2px solid black;
+  padding:12px;
+  cursor: pointer;
+}
+
+.subsection.active {
+  background-color: #f2a9a9;
+}
