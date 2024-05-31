@@ -1,0 +1,52 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.section {
+  height: 400px;
+}
+
+section:nth-child(1) {
+  background-color: #f2a9a9;
+  padding: 2em;
+}
+section:nth-child(2) {
+  background-color: #f2dba9;
+  padding: 2em;
+}
+section:nth-child(3) {
+  background-color: #a9f2bb;
+  padding: 2em;
+}
+section:nth-child(4) {
+  background-color: #a9dcf2;
+  padding: 2em;
+}
+section:nth-child(5) {
+  background-color: #eda9f2;
+  padding: 2em;
+}
+
+.s3 {
+  display: flex;
+  flex-direction:column;
+  justify-content: space-between;
+}
+
+.subsections {
+  display: flex;
+  align-self: center;
+  gap: 40px;
+}
+
+.subsection {
+  outline: 2px solid black;
+  padding:12px;
+  cursor: pointer;
+}
+
+.subsection.active {
+  background-color: #f2a9a9;
+}

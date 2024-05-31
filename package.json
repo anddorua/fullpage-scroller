@@ -11,7 +11,9 @@
   "types": "dist/fvs.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build"
+    "build": "tsc && vite build",
+    "dev:examples": "vite --config vite.examples.config.js",
+    "build:examples": "vite build --config vite.examples.config.js"
   },
   "repository": {
     "type": "git",

@@ -16,6 +16,8 @@ export default defineConfig(({ command }) => {
           globals: {},
         },
       },
+      outDir: "dist",
+      emptyOutDir: true,
     },
     publicDir: command === "serve" ? "public" : false,
     server: {
