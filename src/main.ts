@@ -1,19 +1,35 @@
-import './css/sps-styles.css';
+import './css/fvs-styles.css';
 
 export interface FullpageVerticalSliderOptions {
+  /**
+   * The minimum amount of pixels the user has to scroll to trigger the next slide.
+   */
   deltaYThreshold: number;
+  /**
+   * The selector for the container element that holds all the slides.
+   */
   slidesContainerSelector: string;
+  /**
+   * The selector for the slide sections.
+   */
   slideSectionSelector: string;
+  /**
+   * The media query that will be used to determine if the responsive mode should be enabled.
+   */
   responsiveMediaQuery: string;
   /**
+   * Sets how many subsections are in each section. By default all sections have 1 subsection.
    * Each section can contain subsections. In case there are more than one subsection specified for a section
    * each scroll hit (mouse wheel or touch swipe) will emit a next subsection event instead of
    * scrolling to the next section. When entering a section the subsection event will be emitted
    * for the first subsection. Such event will be emitted before the transition starts.
    * Caution! They can't have zeroes, otherwise it will break logic.
    */
-  subsections?: number[]; // sets how many subsections are in each section, default all sections have 1 subsection
-  subsectionTransitionDuration: number; // used to block scroll events during subsection transition
+  subsections?: number[];
+  /**
+   * Used to block scroll events during subsection transition.
+   */
+  subsectionTransitionDuration: number; 
   onSubsectionEnter: (sectionIndex: number, subsectionIndex: number) => void;
 }
 
@@ -73,7 +89,6 @@ export default class FullpageVerticalSlider {
     if (subsectionIndex < 0) {
       throw new Error("Subsection index can't be negative");
     }
-    console.log('this._subsectionCount(sectionIndex)', sectionIndex, this._subsectionCount(sectionIndex))
     if (subsectionIndex >= this._subsectionCount(sectionIndex)) {
       throw new Error(
         "Subsection index exceeds the subsection count for the active section"
@@ -119,7 +134,7 @@ export default class FullpageVerticalSlider {
     this._collectedScrollY = 0;
     this._scrollInProgress = false;
     history.scrollRestoration = "manual";
-    document.documentElement.classList.add("sps-html-lock");
+    document.documentElement.classList.add("fvs-html-lock");
     document.documentElement.scrollTop = 0;
   }
 
@@ -146,12 +161,12 @@ export default class FullpageVerticalSlider {
       return;
     }
     this._scrollContainerEl.style.transform = `translateY(0px)`;
-    document.documentElement.classList.remove("sps-html-lock");
+    document.documentElement.classList.remove("fvs-html-lock");
     this._resizeObserver?.disconnect();
   }
 
   private _tearDownResponsiveMode(): void {
-    document.body.classList.remove("sps-responsive");
+    document.body.classList.remove("fvs-responsive");
   }
 
   private _setResponsiveMode(): void {
@@ -160,7 +175,7 @@ export default class FullpageVerticalSlider {
     }
     this._mode = SlideMode.RESPONSIVE;
     history.scrollRestoration = this._defaultScrollRestoration;
-    document.body.classList.add("sps-responsive");
+    document.body.classList.add("fvs-responsive");
   }
 
   private _setupListeners(): void {
@@ -193,7 +208,7 @@ export default class FullpageVerticalSlider {
   }
 
   private _findElements(): void {
-    document.body.classList.add("sps-body");
+    document.body.classList.add("fvs-body");
     this._scrollContainerEl = document.querySelector(
       this._options.slidesContainerSelector
     );
@@ -202,14 +217,14 @@ export default class FullpageVerticalSlider {
         `StreamPageScroller: Scroll container element not found by selector: ${this._options.slidesContainerSelector}`
       );
     } else {
-      this._scrollContainerEl.classList.add("sps-scroll-container");
+      this._scrollContainerEl.classList.add("fvs-scroll-container");
     }
     this._sections = Array.from(
       document.querySelectorAll(this._options.slideSectionSelector)
     );
     this._sections.forEach((section, i) => {
-      section.dataset.spsIndex = i.toString();
-      section.classList.add("sps-section");
+      section.dataset.fvsIndex = i.toString();
+      section.classList.add("fvs-section");
     });
   }
 

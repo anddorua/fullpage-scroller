@@ -1,24 +1,24 @@
-.sps-html-lock {
+.fvs-html-lock {
   overflow: hidden;
   position: fixed;
   width: 100%;
 }
 
-.sps-body {
+.fvs-body {
   height: 100dvh;
   overflow: hidden;
   box-sizing: border-box;
 }
 
-.sps-body.sps-responsive {
+.fvs-body.fvs-responsive {
   overflow: visible;
 }
 
-.sps-section {
+.fvs-section {
   box-sizing: border-box;
 }
 
-.sps-scroll-container {
+.fvs-scroll-container {
   box-sizing: border-box;
   transform: translateY(0);
   transition: transform 0.7s;
@@ -26,10 +26,10 @@
   height: 100%;
 }
 
-.sps-scroll-container .sps-section {
+.fvs-scroll-container .fvs-section {
   min-height: 100%;
 }
 
-.sps-responsive .sps-section {
+.fvs-responsive .fvs-section {
   min-height: auto;
 }
