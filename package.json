@@ -3,7 +3,7 @@
   "author": {
     "name": "Andrii Doroshenko"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A JavaScript library for creating full-page vertical sliders. Inspired by fullPage.js",
   "type": "module",
   "main": "dist/fvs.es.js",
