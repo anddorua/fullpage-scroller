@@ -16,21 +16,21 @@ npm install fullpage-vertical-slider
 
 ```html
 <script type="module">
-  import FullpageVerticalSlider from "https://cdn.jsdelivr.net/npm/fullpage-vertical-slider@0.0.0/dist/fvs.es.js";
+  import FullpageVerticalSlider from "https://cdn.jsdelivr.net/npm/fullpage-vertical-slider@latest/dist/fvs.es.js";
 
   const fvs = new FullpageVerticalSlider({});
 </script>
 ```
 
 See demo
-[here](https://anddorua.github.io/fullpage-scroller/as-module/index.html)
+[code](https://github.com/anddorua/fullpage-scroller/blob/master/examples/as-module/index.html)
 
 ### Load as UMD
 
 ```html
 <script
   type="text/javascript"
-  src="https://cdn.jsdelivr.net/npm/fullpage-vertical-slider@0.0.0/dist/fvs.umd.js"
+  src="https://cdn.jsdelivr.net/npm/fullpage-vertical-slider@latest/dist/fvs.umd.js"
 ></script>
 
 <script>
@@ -39,16 +39,16 @@ See demo
 ```
 
 See demo
-[here](https://anddorua.github.io/fullpage-scroller/as-umd/index.html)
+[code](https://github.com/anddorua/fullpage-scroller/blob/master/examples/as-umd/index.html)
 
 ### Library styles
 
-Library uses its specific styles which is attached to the DOM elements after initialization. You should load it from the CDN or bundle to your own bundle.
+The library applies specific styles to DOM elements upon initialization. You should either load these styles from the CDN or include them in your own bundle.
 
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/fullpage-vertical-slider@0.0.0/dist/style.css"
+  href="https://cdn.jsdelivr.net/npm/fullpage-vertical-slider@latest/dist/style.css"
 />
 ```
 
