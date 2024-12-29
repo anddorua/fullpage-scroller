@@ -1,0 +1,12 @@
+.github/
+.vscode/
+exmaples/
+node_modules/
+public/
+src/
+.gitignore
+.npmignore
+tsconfig.json
+vite.config.js
+vite.examples.config.js
+CONTRIBUTING.md
