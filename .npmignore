@@ -1,6 +1,6 @@
 .github/
 .vscode/
-exmaples/
+examples/
 node_modules/
 public/
 src/
